@@ -219,8 +219,9 @@ for i, image in enumerate(im_list):
 
 # remind to cite trackmate and stardist papers
 IJ.log("if using this in a publication, be sure to cite the following papers: ")
-papers = ["https://doi.org/10.1101/2021.09.03.458852 (2021 bioRxiv: Bringing TrackMate into the era of machine-learning and deep-learning)",		# 2021 bioRxiv: Bringing TrackMate into the era of machine-learning and deep-learning
-		  "https://doi.org/10.1007/978-3-030-00934-2_30 (2018 MICCAI: Cell Detection with Star-Convex Polygons)",									# 2018 MICCAI: Cell Detection with Star-Convex Polygons
+papers = [	"https://doi.org/10.1016/j.ymeth.2016.09.016 (2017 Methods - TrackMate: An open and extensible platform for single-particle tracking)",
+			"https://doi.org/10.1101/2021.09.03.458852 (2021 bioRxiv - Bringing TrackMate into the era of machine-learning and deep-learning)",		# 2021 bioRxiv: Bringing TrackMate into the era of machine-learning and deep-learning
+		  	"https://doi.org/10.1007/978-3-030-00934-2_30 (2018 MICCAI - Cell Detection with Star-Convex Polygons)",								# 2018 MICCAI: Cell Detection with Star-Convex Polygons
 		 ]
 for p in papers:
 	IJ.log("- " + p)
