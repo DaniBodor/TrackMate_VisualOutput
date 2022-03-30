@@ -21,6 +21,11 @@ spot_transparency = 0.25	# transparency of spot color overlay
 track_fade_range = 10	# number of frames over which tracks fade in time
 track_direction = "both"	# options are "forward", "backward", or "both"; make sure to put in quotation marks
 
+# ensure that are values are floats rather than ints
+linking_distance = float(linking_distance)	# don't change this
+gap_closing_distance = float(gap_closing_distance)	# don't change this
+splitting_distance = float(splitting_distance)	# don't change this
+merging_distance = float(merging_distance)	# don't change this
 
 #### IMPORT LIBRARIES
 import sys
@@ -60,6 +65,13 @@ def doTrackMate(path):
 #	imp = WindowManager.getCurrentImage()
 
 
+	# Convert Z-stack to T-stack
+	width, height, nChannels, nSlices, nFrames = imp.getDimensions()
+	if nFrames == 1 and nSlices > 1:
+		imp.setDimensions( nChannels, nFrames, nSlices)
+		IJ.log("swapped T and Z dimensions")
+		
+
 
 	#----------------------------
 	# Create the model object now
@@ -84,12 +96,6 @@ def doTrackMate(path):
 	# DB: not using any filters on these
 #	filter1 = FeatureFilter('QUALITY', 30, True)
 #	settings.addSpotFilter(filter1)
-
-	# ensure that are values are floats rather than ints
-	linking_distance = float(linking_distance)	# don't change this
-	gap_closing_distance = float(gap_closing_distance)	# don't change this
-	splitting_distance = float(splitting_distance)	# don't change this
-	merging_distance = float(merging_distance)	# don't change this
 
 	#### Configure tracker and settings
 	settings.trackerFactory = SparseLAPTrackerFactory()
