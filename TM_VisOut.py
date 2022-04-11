@@ -1,12 +1,15 @@
 ## the vast majority of this code is copied from https://imagej.net/plugins/trackmate/scripting#a-full-example
 
 
+#### input settings
+default_filter = "PRJMAX"
+default_extension = "tif"
 #### TM Settings
 # tracking settings
 linking_distance = 30	# max distance (in image units) by which spots can be linked into a track
 gap_closing_frames = 3	# max number of frames over which a spot can be lost and still linked to a track (set to 0 to turn off)
 gap_closing_distance = linking_distance/2 # max distance (in image units) by which spots can be linked into a track after losing a spot for at least 1 frame
-allow_splitting = True	# must be True or False (watch the capitalization)
+allow_splitting = False	# must be True or False (watch the capitalization)
 splitting_distance = linking_distance/2	# max distance (in image units) by which spots can be linked into a single split track
 allow_merging = False	# must be True or False (watch the capitalization)
 merging_distance = linking_distance	# max distance (in image units) from spots can be merge into a single track
@@ -45,8 +48,8 @@ import fiji.plugin.trackmate.io.TmXmlWriter as TmXmlWriter
 gd = Dialog("Input Options")
 gd.addDirectoryField("choose directory", "", 75)
 gd.addMessage("Leave the following empty to ignore")
-gd.addStringField("file extension", "tif")
-gd.addStringField("filename filter", "PRJMAX")
+gd.addStringField("file extension", default_extension)
+gd.addStringField("filename filter", default_filter)
 gd.showDialog()
 if (gd.wasCanceled()):
 	IJ.log("aborted from dialog")
