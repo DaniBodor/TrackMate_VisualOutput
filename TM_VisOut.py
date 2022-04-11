@@ -43,13 +43,18 @@ import fiji.plugin.trackmate.io.TmXmlWriter as TmXmlWriter
 
 # select base directory
 gd = Dialog("Input Options")
-gd.addDirectoryField("choose directory", "")
+gd.addDirectoryField("choose directory", "", 75)
+gd.addMessage("Leave the following empty to ignore")
 gd.addStringField("file extension", "tif")
 gd.addStringField("filename filter", "PRJMAX")
 gd.showDialog()
+if (gd.wasCanceled()):
+	IJ.log("aborted from dialog")
+	sys.exit()
 input_dir = gd.getNextString()
 filetype = gd.getNextString()
 namefilter = gd.getNextString()
+
 
 
 
