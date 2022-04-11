@@ -3,7 +3,6 @@
 
 #### PARAMETERS
 # input
-input_dir = r"C:\Users\dani\Documents\MyCodes\TrackMate_VisualOutput\TEST\LongTracking_1"	# make sure to start with r before the quotation marks
 filetype = "tif"	# extension of files to analyze (empty includes all extensions)
 namefilter = ""	# only include files with this in the name (empty includes all files)
 
@@ -13,7 +12,7 @@ gap_closing_frames = 5	# max number of frames over which a spot can be lost and 
 gap_closing_distance = linking_distance # max distance (in image units) by which spots can be linked into a track after losing a spot for at least 1 frame
 allow_splitting = False	# must be True or False (watch the capitalization)
 splitting_distance = linking_distance	# max distance (in image units) by which spots can be linked into a single split track
-allow_merging = False	# must be True or False
+allow_merging = False	# must be True or False (watch the capitalization)
 merging_distance = linking_distance	# max distance (in image units) from spots can be merge into a single track
 
 # display settings
@@ -29,6 +28,7 @@ import java.io.File as File
 
 from ij import IJ
 from ij import WindowManager
+from ij.gui import GenericDialog
 
 from fiji.plugin.trackmate import Model
 from fiji.plugin.trackmate import Settings
@@ -45,6 +45,12 @@ import fiji.plugin.trackmate.visualization.hyperstack.HyperStackDisplayer as Hyp
 import fiji.plugin.trackmate.features.FeatureFilter as FeatureFilter
 import fiji.plugin.trackmate.io.TmXmlWriter as TmXmlWriter
 
+
+# select base directory
+gd = GenericDialog("test")
+gd.addDirectoryField("choose directory", "")
+gd.showDialog()
+input_dir = gd.getNextString()
 
 
 # clear memory
