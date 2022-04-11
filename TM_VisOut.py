@@ -1,11 +1,7 @@
 ## the vast majority of this code is copied from https://imagej.net/plugins/trackmate/scripting#a-full-example
 
 
-#### PARAMETERS
-# input
-filetype = "tif"	# extension of files to analyze (empty includes all extensions)
-namefilter = ""	# only include files with this in the name (empty includes all files)
-
+#### TM Settings
 # tracking settings
 linking_distance = 30	# max distance (in image units) by which spots can be linked into a track
 gap_closing_frames = 5	# max number of frames over which a spot can be lost and still linked to a track (set to 0 to turn off)
@@ -14,7 +10,6 @@ allow_splitting = False	# must be True or False (watch the capitalization)
 splitting_distance = linking_distance	# max distance (in image units) by which spots can be linked into a single split track
 allow_merging = False	# must be True or False (watch the capitalization)
 merging_distance = linking_distance	# max distance (in image units) from spots can be merge into a single track
-
 # display settings
 spot_transparency = 0.25	# transparency of spot color overlay
 track_fade_range = 10	# number of frames over which tracks fade in time
@@ -47,10 +42,15 @@ import fiji.plugin.trackmate.io.TmXmlWriter as TmXmlWriter
 
 
 # select base directory
-gd = GenericDialog("test")
+gd = GenericDialog("Input Options")
 gd.addDirectoryField("choose directory", "")
+gd.addStringField("file extension", "tif")
+gd.addStringField("filename filter", "PRJMAX")
 gd.showDialog()
 input_dir = gd.getNextString()
+filetype = gd.getNextString()
+namefilter = gd.getNextString()
+
 
 
 # clear memory
