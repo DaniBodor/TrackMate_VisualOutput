@@ -3,15 +3,15 @@
 
 #### PARAMETERS
 # input
-input_dir = r"C:\Users\dani\Documents\MyCodes\TimeAsymmetry\temp\New"	# make sure to start with r before the quotation marks
+input_dir = r"C:\Users\dani\Documents\MyCodes\TrackMate_VisualOutput\TEST\LongTracking_1"	# make sure to start with r before the quotation marks
 filetype = "tif"	# extension of files to analyze (empty includes all extensions)
 namefilter = ""	# only include files with this in the name (empty includes all files)
 
 # tracking settings
-linking_distance = 30.0	# max distance (in image units) by which spots can be linked into a track
+linking_distance = 30	# max distance (in image units) by which spots can be linked into a track
 gap_closing_frames = 5	# max number of frames over which a spot can be lost and still linked to a track (set to 0 to turn off)
 gap_closing_distance = linking_distance # max distance (in image units) by which spots can be linked into a track after losing a spot for at least 1 frame
-allow_splitting = True	# must be True or False
+allow_splitting = False	# must be True or False (watch the capitalization)
 splitting_distance = linking_distance	# max distance (in image units) by which spots can be linked into a single split track
 allow_merging = False	# must be True or False
 merging_distance = linking_distance	# max distance (in image units) from spots can be merge into a single track
@@ -21,11 +21,6 @@ spot_transparency = 0.25	# transparency of spot color overlay
 track_fade_range = 10	# number of frames over which tracks fade in time
 track_direction = "both"	# options are "forward", "backward", or "both"; make sure to put in quotation marks
 
-# ensure that are values are floats rather than ints
-linking_distance = float(linking_distance)	# don't change this
-gap_closing_distance = float(gap_closing_distance)	# don't change this
-splitting_distance = float(splitting_distance)	# don't change this
-merging_distance = float(merging_distance)	# don't change this
 
 #### IMPORT LIBRARIES
 import sys
@@ -51,8 +46,21 @@ import fiji.plugin.trackmate.features.FeatureFilter as FeatureFilter
 import fiji.plugin.trackmate.io.TmXmlWriter as TmXmlWriter
 
 
-#### DEFINE TRACKMATE FUNCTION, MAIN BODY OF CODE
 
+# clear memory
+for x in range(3):
+	IJ.run("Collect Garbage", "");
+
+
+# ensure that are values are floats rather than ints (don't change these)
+linking_distance = float(linking_distance)
+gap_closing_distance = float(gap_closing_distance)
+splitting_distance = float(splitting_distance)
+merging_distance = float(merging_distance)
+spot_transparency = float(spot_transparency)
+
+
+#### DEFINE TRACKMATE FUNCTION, MAIN BODY OF CODE
 def doTrackMate(path):
 
 	# Open image from file
@@ -97,6 +105,7 @@ def doTrackMate(path):
 	# DB: not using any filters on these
 #	filter1 = FeatureFilter('QUALITY', 30, True)
 #	settings.addSpotFilter(filter1)
+
 
 	#### Configure tracker and settings
 	settings.trackerFactory = SparseLAPTrackerFactory()
@@ -222,9 +231,10 @@ for i, image in enumerate(im_list):
 	path = os.path.join(input_dir,image)
 	IJ.log("####### running TrackMate on " + image + " (image "+str(i+1)+" of "+str(len(im_list)) + ") #######" )
 	doTrackMate(path)
-	IJ.log("finished " + image)
+	IJ.log("finished " + image + "\n")
 
 # remind to cite trackmate and stardist papers
+IJ.log("")
 IJ.log("if using this in a publication, be sure to cite the following papers: ")
 papers = [	"https://doi.org/10.1016/j.ymeth.2016.09.016 (2017 Methods - TrackMate: An open and extensible platform for single-particle tracking)",
 			"https://doi.org/10.1101/2021.09.03.458852 (2021 bioRxiv - Bringing TrackMate into the era of machine-learning and deep-learning)",		# 2021 bioRxiv: Bringing TrackMate into the era of machine-learning and deep-learning
@@ -232,7 +242,6 @@ papers = [	"https://doi.org/10.1016/j.ymeth.2016.09.016 (2017 Methods - TrackMat
 		 ]
 for p in papers:
 	IJ.log("- " + p)
-citation_reminder = citation_reminder[:-1]
 
-IJ.log(citation_reminder)
-IJ.log("ALL DONE")
+
+IJ.log("\nALL DONE")
