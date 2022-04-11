@@ -65,13 +65,13 @@ def doTrackMate(path):
 #	imp = WindowManager.getCurrentImage()
 
 
-	# Set to grayscalr and Convert Z-stack to T-stack
+	# Set to grayscale and Convert Z-stack to T-stack
 	IJ.run(imp, "Grays", "");
 	width, height, nChannels, nSlices, nFrames = imp.getDimensions()
 	if nFrames == 1 and nSlices > 1:
 		imp.setDimensions( nChannels, nFrames, nSlices)
 		IJ.log("swapped T and Z dimensions")
-		
+		IJ.run(imp, "Save", "");
 
 
 	#----------------------------
