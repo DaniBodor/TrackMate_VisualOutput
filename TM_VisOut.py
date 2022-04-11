@@ -4,10 +4,10 @@
 #### TM Settings
 # tracking settings
 linking_distance = 30	# max distance (in image units) by which spots can be linked into a track
-gap_closing_frames = 5	# max number of frames over which a spot can be lost and still linked to a track (set to 0 to turn off)
-gap_closing_distance = linking_distance # max distance (in image units) by which spots can be linked into a track after losing a spot for at least 1 frame
-allow_splitting = False	# must be True or False (watch the capitalization)
-splitting_distance = linking_distance	# max distance (in image units) by which spots can be linked into a single split track
+gap_closing_frames = 3	# max number of frames over which a spot can be lost and still linked to a track (set to 0 to turn off)
+gap_closing_distance = linking_distance/2 # max distance (in image units) by which spots can be linked into a track after losing a spot for at least 1 frame
+allow_splitting = True	# must be True or False (watch the capitalization)
+splitting_distance = linking_distance/2	# max distance (in image units) by which spots can be linked into a single split track
 allow_merging = False	# must be True or False (watch the capitalization)
 merging_distance = linking_distance	# max distance (in image units) from spots can be merge into a single track
 # display settings
@@ -23,7 +23,7 @@ import java.io.File as File
 
 from ij import IJ
 from ij import WindowManager
-from ij.gui import GenericDialog
+from ij.gui import NonBlockingGenericDialog as Dialog
 
 from fiji.plugin.trackmate import Model
 from fiji.plugin.trackmate import Settings
@@ -42,7 +42,7 @@ import fiji.plugin.trackmate.io.TmXmlWriter as TmXmlWriter
 
 
 # select base directory
-gd = GenericDialog("Input Options")
+gd = Dialog("Input Options")
 gd.addDirectoryField("choose directory", "")
 gd.addStringField("file extension", "tif")
 gd.addStringField("filename filter", "PRJMAX")
